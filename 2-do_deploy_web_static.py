@@ -6,6 +6,7 @@ from fabric.api import *
 env.hosts = ['54.237.86.166', '54.236.48.218']
 env.user = "ubuntu"
 
+
 def do_deploy(archive_path):
     """Distributes an archive to web servers"""
 
@@ -17,13 +18,11 @@ def do_deploy(archive_path):
     if not status.succeeded:
         return False
 
-
     # Extract archive file name
     arc = archive_path.split('/')[-1].strip('.tgz')
 
     # Destination path for archive extraction
-    dest_folder = "/data/web_static/releases/{}/"\
-            .format(arc)
+    dest_folder = "/data/web_static/releases/{}/".format(arc)
 
     # Extract archive file name
     arc = archive_path.split('/')[-1].strip('.tgz')
