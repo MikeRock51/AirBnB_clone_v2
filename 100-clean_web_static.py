@@ -25,4 +25,23 @@ def do_clean(number=0):
         # Remove the second most recent archive from the list
         archive_list.remove(max(archive_list))
 
-    
+    # Delete outdated archives locally
+    for archive in archive_list:
+        if 'web_static_' in archive:
+            local('rm versions/{}'.format(archive))
+
+    # Get a list of archives from server
+    archive_list = run('ls -t /data/web_static/releases/').split()
+
+    # Remove the latest version of archive from list
+    archive_list.remove(max(archive_list))
+
+    # Check if more than one archive is required
+    if number == 2:
+        # Remove the second most recent archive from list
+        archive_list.remove(max(archive_list))
+
+    # Delete outdated archives from servers
+    for archive in archive_list:
+        if 'web_static_' in archive:
+            sudo('rm -rf /data/web_static/releases/{}'.format(archive))
