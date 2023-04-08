@@ -2,7 +2,7 @@
 
 
 from fabric.api import *
-import subprocess
+from datetime import datetime
 
 
 def do_pack():
@@ -14,12 +14,7 @@ def do_pack():
     local("mkdir -p versions")
 
     # Create the date format string
-    date_process = subprocess.run("date +'%Y%m%d%H%M%S'", shell=True,
-                                  capture_output=True, text=True)
-    if date_process.returncode == 0:
-        date_string = date_process.stdout.strip()
-    else:
-        return None
+    date_string = datetime.now().strftime('%Y%m%d%H%M%S')
 
     # Set the archive path
     path = "versions/web_static_{}.tgz".format(date_string)
