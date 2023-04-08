@@ -3,6 +3,7 @@
 
 from fabric.api import *
 import subprocess
+import os
 
 
 def do_pack():
@@ -14,7 +15,7 @@ def do_pack():
 
     # Create the date format string
     date_process = subprocess.run("date +'%Y%m%d%H%M%S'", shell=True,
-            capture_output=True, text=True)
+                                  capture_output=True, text=True)
     if date_process.returncode == 0:
         date_string = date_process.stdout.strip()
     else:
@@ -31,6 +32,7 @@ def do_pack():
     else:
         return None
 
+
 # List of hosts and users
 env.hosts = ['54.237.86.166', '54.236.48.218']
 env.user = "ubuntu"
@@ -39,7 +41,7 @@ env.user = "ubuntu"
 def do_deploy(archive_path):
     """Distributes an archive to web servers"""
 
-    if not archive_path:
+    if not os.exists(archive_path):
         return None
 
     # Copy archive to server
@@ -92,6 +94,7 @@ def do_deploy(archive_path):
         return False
 
     return True
+
 
 def deploy():
     """Creates and distributes an archive to web servers"""

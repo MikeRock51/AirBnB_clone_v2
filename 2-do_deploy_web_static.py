@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from fabric.api import *
+import os
 
 
 # List of hosts and users
@@ -10,7 +11,7 @@ env.user = "ubuntu"
 def do_deploy(archive_path):
     """Distributes an archive to web servers"""
 
-    if not archive_path:
+    if not os.exists(archive_path):
         return None
 
     # Copy archive to server
