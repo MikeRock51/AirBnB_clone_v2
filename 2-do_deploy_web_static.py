@@ -38,7 +38,7 @@ def do_deploy(archive_path):
         return False
 
     # Move archive content to archive web_static_version directory
-    status = sudo("mv {}/web_static/* {}".format(dest_folder, dest_folder))
+    status = sudo("mv {}web_static/* {}".format(dest_folder, dest_folder))
     if not status.succeeded:
         return False
 
