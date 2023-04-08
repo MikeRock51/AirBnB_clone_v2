@@ -16,7 +16,7 @@ def do_pack():
     date_process = subprocess.run("date +'%Y%m%d%H%M%S'", shell=True,
             capture_output=True, text=True)
     if date_process.returncode == 0:
-        date_string = date_process.strip()
+        date_string = date_process.stdout.strip()
     else:
         return None
 
