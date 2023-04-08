@@ -2,6 +2,7 @@
 
 
 from fabric.api import *
+import subprocess
 
 
 def do_pack():
