@@ -15,7 +15,7 @@ def do_pack():
     # Create the date format string
     date_process = subprocess.run("date +'%Y%m%d%H%M%S'", shell=True,
             capture_output=True, text=True)
-    if data_process.returncode == 0:
+    if date_process.returncode == 0:
         date_string = date_process.strip()
     else:
         return None
