@@ -59,7 +59,7 @@ def do_deploy(archive_path):
         return False
 
     # Create new symbolic link
-    status = sudo("ln -sf {} /data/web_static/current".format(dest_folder))
+    status = sudo("ln -s {} /data/web_static/current".format(dest_folder))
     if not status.succeeded:
         return False
 
