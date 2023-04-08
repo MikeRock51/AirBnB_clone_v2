@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Prepares a server for deployment
 
-sudo apt update
+sudo apt update -y
 sudo apt install nginx -y
 sudo [ -d /data/web_static/shared/ ] || sudo mkdir /data/web_static/shared/ -p
 sudo [ -d /data/web_static/releases/test/ ] || sudo mkdir /data/web_static/releases/test/ -p
