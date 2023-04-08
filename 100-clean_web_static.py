@@ -21,7 +21,7 @@ def do_clean(number=0):
     archive_list.remove(max(archive_list))
 
     # Check if more than one latest archive is required
-    if number == 2:
+    if number > 1:
         # Remove the second most recent archive from the list
         archive_list.remove(max(archive_list))
 
@@ -37,7 +37,7 @@ def do_clean(number=0):
     archive_list.remove(max(archive_list))
 
     # Check if more than one archive is required
-    if number == 2:
+    if number > 1:
         # Remove the second most recent archive from list
         archive_list.remove(max(archive_list))
 
