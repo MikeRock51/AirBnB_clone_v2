@@ -12,7 +12,7 @@ def do_deploy(archive_path):
     """Distributes an archive to web servers"""
 
     if not os.path.exists(archive_path):
-        return None
+        return False
 
     # Copy archive to server
     status = put(archive_path, "/tmp/")
