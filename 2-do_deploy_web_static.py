@@ -37,13 +37,23 @@ def do_deploy(archive_path):
     if not status.succeeded:
         return False
 
+    # Move archive content to archive web_static_version directory
+    status = sudo("mv {}/web_static/* {}".format(dest_folder, dest_folder))
+    if not status.succeeded:
+        return False
+
+    # Delete emptied archive folder
+    status = sudo("rm -rf {}/web_static/".format(dest_folder))
+    if not status.succeeded:
+        return False
+
     # Delete archive from server
     status = sudo("rm /tmp/{}.tgz".format(arc))
     if not status.succeeded:
         return False
 
     # Delete old symbolic link from server
-    status = sudo("rm /data/web_static/current")
+    status = sudo("rm -rf /data/web_static/current")
     if not status.succeeded:
         return False
 
