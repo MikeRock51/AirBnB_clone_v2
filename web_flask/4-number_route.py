@@ -43,14 +43,14 @@ def dear_python(text="is cool"):
     return ("Python {}".format(text))
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def is_number(n):
     """Checks if input is a number"""
 
     if n.isdigit():
         return ("{} is a number".format(text))
-    else:
-        abort(404)
+    # else:
+       # abort(404)
 
 
 if __name__ == '__main__':
