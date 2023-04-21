@@ -48,7 +48,7 @@ def is_number(n):
     """Checks if input is a number"""
 
     if n.isdigit():
-        return ("{} is a number".format(text))
+        return ("{} is a number".format(n))
     else:
         abort(404)
 
