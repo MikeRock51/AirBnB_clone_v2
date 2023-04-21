@@ -26,10 +26,10 @@ def hbnb():
 def dear_c(text):
     """Returns a page about C"""
 
-    proText = text.split('_')
-    proText = " ".join(proText)
+    text = text.split('_')
+    text = " ".join(text)
 
-    return (f"C {proText}")
+    return ("C {}".format(text))
 
 
 @app.route('/python', strict_slashes=False)
@@ -40,7 +40,7 @@ def dear_python(text="is cool"):
     if text != 'is cool':
         text = text.split('_')
         text = " ".join(text)
-    return (f"Python {text}")
+    return ("Python {}".format(text))
 
 
 @app.route('/number/<n>', strict_slashes=False)
@@ -48,7 +48,7 @@ def is_number(n):
     """Checks if input is a number"""
 
     if n.isdigit():
-        return (f"{n} is a number")
+        return ("{} is a number".format(text))
     else:
         abort(404)
 
