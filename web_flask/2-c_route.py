@@ -29,7 +29,7 @@ def dear_c(text):
     proText = text.split('_')
     proText = " ".join(proText)
 
-    return (f"C {proText}")
+    return ("C {}".format(proText))
 
 
 if __name__ == '__main__':
