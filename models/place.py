@@ -5,9 +5,6 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
-from os import getenv
-from models.review import Review
-from models.amenity import Amenity
 from models.engine.file_storage import FileStorage
 
 
@@ -33,40 +30,40 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship('Review', backref='place',
-                               cascade='all, delete')
-        amenities = relationship('Amenity', secondary=place_amenity,
-                                 viewonly=False, backref='place_amenity')
-    else:
-        @property
-        def reviews(self):
-            """Returns a list of Review instances"""
-            reviewList = []
-            fs = FileStorage()
-            allReviews = fs.all(Review)
-            for instance in allReviews.values():
-                if instance.place_id == self.id:
-                    reviewList.append(instance)
 
-            return reviewList
+    reviews = relationship('Review', backref='place',
+                           cascade='all, delete')
+    amenities = relationship('Amenity',
+                             secondary=place_amenity, viewonly=False)
 
-        @property
-        def amenities(self):
-            """Returns a list of amenity instances based on amenity_ids"""
-            amenityList = []
-            fs = FileStorage()
-            allAmenities = fs.all(Amenity)
+    @property
+    def reviews(self):
+        """Returns a list of Review instances"""
+        reviewList = []
+        fs = FileStorage()
+        allReviews = fs.all(Review)
+        for instance in allReviews.values():
+            if instance.place_id == self.id:
+                reviewList.append(instance)
 
-            for instance in allAmenities.values():
-                if instance.id in self.amenity_ids:
-                    amenityList.append(instance)
+        return reviewList
 
-            return amenityList
+    @property
+    def amenities(self):
+        """Returns a list of amenity instances based on amenity_ids"""
+        amenityList = []
+        fs = FileStorage()
+        allAmenities = fs.all(Amenity)
 
-        @amenities.setter
-        def amenities(self, obj):
-            """Adds the id of an amenity instance to amenity_ids"""
-            if type(obj).__name__ == 'Amenity':
-                self.amenity_ids.append(obj.id)
-                print(self.amenity_ids)
+        for instance in allAmenities.values():
+            if instance.id in self.amenity_ids:
+                amenityList.append(instance)
+
+        return amenityList
+
+    @amenities.setter
+    def amenities(self, obj):
+        """Adds the id of an amenity instance to amenity_ids"""
+        if type(obj).__name__ == 'Amenity':
+            self.amenity_ids.append(obj.id)
+            print(self.amenity_ids)

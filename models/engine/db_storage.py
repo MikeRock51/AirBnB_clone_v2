@@ -34,8 +34,7 @@ class DBStorage:
 
         objects = {}
         if cls is not None:
-            print(cls)
-            queryResults = self.__session.query(cls.__class__.__name__).all()
+            queryResult = self.__session.query(cls).all()
 
             for result in queryResult:
                 key = "{}.{}".format(result.__class__.__name__, result.id)
