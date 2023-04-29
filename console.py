@@ -13,15 +13,15 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-            
+
 class_list = {
-        'BaseModel': BaseModel,
-        'User': User,
-        'Place': Place,
-        'State': State,
-        'City': City,
-        'Amenity': Amenity,
-        'Review': Review
+    'BaseModel': BaseModel,
+    'User': User,
+    'Place': Place,
+    'State': State,
+    'City': City,
+    'Amenity': Amenity,
+    'Review': Review
 }
 
 
@@ -35,9 +35,6 @@ class HBNBCommand(cmd.Cmd):
         print("You say make I QUIT?")
         return True
 
-    #def do_EOF(self, line):
-     #   """Exits the interpreter when it encounters EOF signal"""
-      #  return True
     do_EOF = do_quit
 
     def emptyline(self):
@@ -90,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             try:
-                del(storage.all()[f"{args[0]}.{args[1]}"])
+                del (storage.all()[f"{args[0]}.{args[1]}"])
                 storage.save()
             except KeyError:
                 print("** no instance found **")
@@ -100,9 +97,9 @@ class HBNBCommand(cmd.Cmd):
         all_instances = storage.all()
         class_instances = []
 
-        if line and not line in class_list:
-                print("** class doesn't exist **")
-                return False
+        if line and line not in class_list:
+            print("** class doesn't exist **")
+            return False
         else:
             for instance in all_instances.values():
                 if line:
@@ -117,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         args = args[:4]
         # [class_name, id, attr_name, attr_value] =\
-                    # [arg for arg in args]
+        # [arg for arg in args]
         if not line:
             print("** class name missing **")
             return False
@@ -144,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, line):
         """Retrieves the number of instances of a class"""
-        if not line: 
+        if not line:
             print("** class name missing **")
         elif line not in class_list:
             print("** class doesn't exist **")
@@ -156,10 +153,9 @@ class HBNBCommand(cmd.Cmd):
                     count += 1
             print(count)
 
-
     def help_show(self):
         print('\n'.join(["Prints the string representation of an instance",
-                "based on class name and id"]))
+                         "based on class name and id"]))
 
     def parseline(self, line):
         """Parses commands to suit console syntax before execution"""
@@ -174,15 +170,21 @@ class HBNBCommand(cmd.Cmd):
                         kwargs = json.loads(kwargs)
                         for i, (key, value) in enumerate(kwargs.items()):
                             if i < len(kwargs) - 1:
-                                self.onecmd(f"update {parsed_line[0]} {id} {key} '{value}'")
+                                self.onecmd(
+                                    f"update {parsed_line[0]} {id} {key}\
+                                        '{value}'")
                             else:
-                                parsed_line = ("update", parsed_line[0], id, key, str(value))
+                                parsed_line = (
+                                    "update", parsed_line[0], id, key,
+                                    str(value))
                     else:
-                        clean_line = [ln for ln in parsed_line[1].split('"')[1:] if ln != ", " and ln != ')']
+                        clean_line = [ln for ln in parsed_line[1].split(
+                            '"')[1:] if ln != ", " and ln != ')']
                         id = clean_line[0]
                         attr_name = clean_line[1]
                         attr_value = f"'{clean_line[2]}'"
-                        parsed_line = ("update", parsed_line[0], id, attr_name, attr_value)
+                        parsed_line = ("update", parsed_line[0], id,
+                                       attr_name, attr_value)
                 else:
                     id = parsed_line[1].split('"')[1]
                     parsed_line = parsed_line[1].split('(')[0], parsed_line[0]
