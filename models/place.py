@@ -59,7 +59,7 @@ class Place(BaseModel, Base):
             allAmenities = fs.all(Amenity)
 
             for instance in allAmenities.values():
-                if instance.to_dict().id in self.ameinty_ids:
+                if instance.id in self.amenity_ids:
                     amenityList.append(instance)
 
             return amenityList
