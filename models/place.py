@@ -12,9 +12,12 @@ from models.engine.file_storage import FileStorage
 
 
 place_amenity = Table('place_amenity', Base.metadata,
-        Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
-)
+                      Column('place_id', String(60), ForeignKey(
+                          'places.id'), primary_key=True, nullable=False),
+                      Column('amenity_id', String(60), ForeignKey(
+                          'amenities.id'), primary_key=True, nullable=False)
+                      )
+
 
 class Place(BaseModel, Base):
     """The place class"""
@@ -31,9 +34,10 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship('Review', backref='place', cascade='all, delete')
+        reviews = relationship('Review', backref='place',
+                               cascade='all, delete')
         amenities = relationship('Amenity', secondary=place_amenity,
-                                viewonly=False, backref='place_amenity')
+                                 viewonly=False, backref='place_amenity')
     else:
         @property
         def reviews(self):
@@ -43,7 +47,7 @@ class Place(BaseModel, Base):
             allReviews = fs.all(Review)
             for instance in allReviews.values():
                 if instance.place_id == self.id:
-                        reviewList.append(instance)
+                    reviewList.append(instance)
 
             return reviewList
 
@@ -59,6 +63,7 @@ class Place(BaseModel, Base):
                     amenityList.append(instance)
 
             return amenityList
+
         @amenities.setter
         def amenities(self, obj):
             """Adds the id of an amenity instance to amenity_ids"""
