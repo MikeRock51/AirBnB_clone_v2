@@ -14,7 +14,6 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-
     def all(self, cls=None):
         """Returns all stored instances"""
         if cls is not None:
@@ -47,18 +46,18 @@ class FileStorage:
             for key, value in self.__objects.items():
                 if obj.to_dict() == value.to_dict():
                     keyToDel = key
-            del(self.__objects[keyToDel])
+            del (self.__objects[keyToDel])
 
     def class_list(self):
-            from models.base_model import BaseModel
-            from models.user import User
-            from models.place import Place
-            from models.state import State
-            from models.city import City
-            from models.amenity import Amenity
-            from models.review import Review
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
 
-            return {
+        return {
             'BaseModel': BaseModel,
             'User': User,
             'Place': Place,
@@ -66,7 +65,7 @@ class FileStorage:
             'City': City,
             'Amenity': Amenity,
             'Review': Review
-            }
+        }
 
     def reload(self):
         """Deserializes the Json file to __objects"""
@@ -80,6 +79,6 @@ class FileStorage:
                 # print(value['__class__'])
                 calling_class = self.class_list()[value['__class__']]
                 # print(calling_class)
-                self.__objects[key] = calling_class(**value) 
+                self.__objects[key] = calling_class(**value)
         else:
             return
