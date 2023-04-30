@@ -11,11 +11,13 @@ from os import getenv
 
 class State(BaseModel, Base):
     """The state class"""
-    __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
     if getenv('HBNB_TYPE_STORAGE') == 'db':
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
         cities = relationship('City', cascade="all, delete", backref="state")
     else:
+        name = ""
+
         @property
         def cities(self):
             """Returns all cities associated the state instnce"""
@@ -27,3 +29,7 @@ class State(BaseModel, Base):
                 if instance.state_id == self.id:
                     stateCities.append(instance)
             return stateCities
+
+    def __init__(self, *args, **kwargs):
+        """Initializes a state instance"""
+        super().__init__(*args, **kwargs)
