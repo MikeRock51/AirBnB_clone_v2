@@ -1,49 +1,49 @@
 #!/usr/bin/python3
-""" Test link Many-To-Many Place <> Amenity
+"""Doc
 """
-from models import *
-from models.user import User
+import MySQLdb
+import sys
+import uuid
+from models import storage
 from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
 
 
-# creation of a State
-state = State(name="California")
-state.save()
+def add_states(number=1):
+    conn = MySQLdb.connect(host="localhost", port=3306, user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3], charset="utf8")
+    cur = conn.cursor()
 
-# creation of a City
-city = City(state_id=state.id, name="San Francisco")
-city.save()
+    for i in range(number):
+        cur.execute("INSERT INTO `states` (id, created_at, updated_at, name) VALUES ('{}','2016-03-25 19:42:40','2016-03-25 19:42:40','state{}');".format(str(uuid.uuid4()), i))
 
-# creation of a User
-user = User(email="john@snow.com", password="johnpwd")
-user.save()
+    conn.commit()
+    cur.close()
+    conn.close()
 
-# creation of 2 Places
-place_1 = Place(user_id=user.id, city_id=city.id, name="House 1")
-place_1.save()
-place_2 = Place(user_id=user.id, city_id=city.id, name="House 2")
-place_2.save()
 
-# creation of 3 various Amenity
-amenity_1 = Amenity(name="Wifi")
-amenity_1.save()
-amenity_2 = Amenity(name="Cable")
-amenity_2.save()
-amenity_3 = Amenity(name="Oven")
-amenity_3.save()
+def wrapper_all_type(m_class):
+    res = {}
+    try:
+        res = storage.all(m_class)
+    except:
+        res = {}
+    if res is None or len(res.keys()) == 0:
+        try:
+            res = storage.all(m_class.__name__)
+        except:
+            res = {}
+    return res
+        
 
-# link place_1 with 2 amenities
-place_1.amenities.append(amenity_1)
-place_1.amenities.append(amenity_2)
+print(len(wrapper_all_type(State)))
 
-# link place_2 with 3 amenities
-place_2.amenities.append(amenity_1)
-place_2.amenities.append(amenity_2)
-place_2.amenities.append(amenity_3)
+# Initial number of states
+add_states(3)
 
-storage.save()
+storage.close()
+print(len(wrapper_all_type(State)))
 
-print("OK")
+# Add new states
+add_states(2)
+
+storage.close()
+print(len(wrapper_all_type(State)))
