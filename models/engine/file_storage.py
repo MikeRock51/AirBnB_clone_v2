@@ -29,7 +29,7 @@ class FileStorage:
         """
         Saves obj into __objects with the key <obj class name>.id
         """
-        self.__objects[f"{type(obj).__name__}.{obj.id}"] = obj
+        self.__objects["{}.{}".format(type(obj).__name__, obj.id] = obj
 
     def save(self):
         """Serializes __objects to file.json"""
@@ -76,9 +76,7 @@ class FileStorage:
             with open(self.__file_path, 'r') as file:
                 json_load = json.load(file)
             for key, value in json_load.items():
-                # print(value['__class__'])
                 calling_class = self.class_list()[value['__class__']]
-                # print(calling_class)
                 self.__objects[key] = calling_class(**value)
         else:
             return
