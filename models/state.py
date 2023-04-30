@@ -22,7 +22,7 @@ class State(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """Initializes a state instance"""
         super().__init__(*args, **kwargs)
-    
+ 
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
