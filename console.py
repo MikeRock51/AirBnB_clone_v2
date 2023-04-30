@@ -71,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             try:
-                instance = storage.all()[f"{args[0]}.{args[1]}"]
+                instance = storage.all()["{}.{}".format(args[0], args[1])]
                 print(instance)
             except KeyError:
                 print("** no instance found **")
@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             try:
-                del (storage.all()[f"{args[0]}.{args[1]}"])
+                del (storage.all()["{}.{}".format(args[0], args[1])])
                 storage.save()
             except KeyError:
                 print("** no instance found **")
@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
             return False
         else:
             try:
-                instance = storage.all()[f"{args[0]}.{args[1]}"]
+                instance = storage.all()["{}.{}".format(args[0], args[1])]
             except KeyError:
                 print("** no instance found **")
                 return False
@@ -170,9 +170,8 @@ class HBNBCommand(cmd.Cmd):
                         kwargs = json.loads(kwargs)
                         for i, (key, value) in enumerate(kwargs.items()):
                             if i < len(kwargs) - 1:
-                                self.onecmd(
-                                    f"update {parsed_line[0]} {id} {key}\
-                                        '{value}'")
+                                self.onecmd("update {} {} {}'{}'".format(
+                                    parsed_line[0], id, key, value))
                             else:
                                 parsed_line = (
                                     "update", parsed_line[0], id, key,
@@ -182,7 +181,7 @@ class HBNBCommand(cmd.Cmd):
                             '"')[1:] if ln != ", " and ln != ')']
                         id = clean_line[0]
                         attr_name = clean_line[1]
-                        attr_value = f"'{clean_line[2]}'"
+                        attr_value = "'{}'".format(clean_line[2])
                         parsed_line = ("update", parsed_line[0], id,
                                        attr_name, attr_value)
                 else:
