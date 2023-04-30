@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Starts a web application on 0.0.0.0:5000"""
+"""Starts a web application on 0.0.0.0:5000 with multiple routes"""
 
 from flask import Flask, render_template
 
