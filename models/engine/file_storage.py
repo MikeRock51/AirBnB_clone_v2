@@ -29,7 +29,7 @@ class FileStorage:
         """
         Saves obj into __objects with the key <obj class name>.id
         """
-        self.__objects["{}.{}".format(type(obj).__name__, obj.id] = obj
+        self.__objects["{}.{}".format(type(obj).__name__, obj.id)] = obj
 
     def save(self):
         """Serializes __objects to file.json"""
