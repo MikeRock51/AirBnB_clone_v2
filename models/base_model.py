@@ -9,6 +9,7 @@ from copy import copy
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+from os import getenv
 
 Base = declarative_base()
 
@@ -16,9 +17,10 @@ Base = declarative_base()
 class BaseModel:
     """Defines all common attributes and methods for other classes"""
 
-    id = Column(String(60), nullable=False, primary_key=True)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    if getenv("HBNB_TYPE_STORAGE") == 'db':
+        id = Column(String(60), nullable=False, primary_key=True)
+        created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+        updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Object contructor"""
