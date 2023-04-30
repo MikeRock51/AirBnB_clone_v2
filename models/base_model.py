@@ -17,22 +17,21 @@ Base = declarative_base()
 class BaseModel:
     """Defines all common attributes and methods for other classes"""
 
-    if getenv("HBNB_TYPE_STORAGE") == 'db':
-        id = Column(String(60), nullable=False, primary_key=True)
-        created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-        updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    #if getenv("HBNB_TYPE_STORAGE") == 'db':
+    id = Column(String(60), nullable=False, primary_key=True, default=uuid4())
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Object contructor"""
 
         if kwargs and 'id' in kwargs:
             for key, value in kwargs.items():
-                if key == '__class__':
-                    continue
-                if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.fromisoformat(value))
-                else:
-                    setattr(self, key, value)
+                if key != '__class__':
+                    if key == 'created_at' or key == 'updated_at':
+                        setattr(self, key, datetime.fromisoformat(value))
+                    else:
+                        setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
