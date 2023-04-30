@@ -3,7 +3,7 @@
 
 
 from models.base_model import BaseModel, Base
-from models.engine.file_storage import FileStorage
+from models import storage
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import getenv
@@ -18,9 +18,12 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
+            """Returns all cities associated the state instnce"""
+            from models.city import City
+
             stateCities = []
-            for key, value in FileStorage.__objects.items():
-                if value.to_dict().__class__ == 'City'\
-                        and value.to_dict().state_id == self.id:
-                    stateCities.append(value)
+            allCities = storage.all(City)
+            for instance in allCities.values():
+                if instance.state_id == self.id:
+                    stateCities.append(instance)
             return stateCities

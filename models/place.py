@@ -5,7 +5,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
-from models.engine.file_storage import FileStorage
+from models import storage
 
 
 place_amenity = Table('place_amenity', Base.metadata,
@@ -40,8 +40,7 @@ class Place(BaseModel, Base):
     def reviews(self):
         """Returns a list of Review instances"""
         reviewList = []
-        fs = FileStorage()
-        allReviews = fs.all(Review)
+        allReviews = storage.all(Review)
         for instance in allReviews.values():
             if instance.place_id == self.id:
                 reviewList.append(instance)
@@ -52,8 +51,7 @@ class Place(BaseModel, Base):
     def amenities(self):
         """Returns a list of amenity instances based on amenity_ids"""
         amenityList = []
-        fs = FileStorage()
-        allAmenities = fs.all(Amenity)
+        allAmenities = storage.all(Amenity)
 
         for instance in allAmenities.values():
             if instance.id in self.amenity_ids:

@@ -82,3 +82,7 @@ class FileStorage:
                 self.__objects[key] = calling_class(**value)
         else:
             return
+
+    def close(self):
+        """Calls reload method to deserialize JSON file"""
+        self.reload()
