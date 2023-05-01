@@ -36,8 +36,8 @@ class Place(BaseModel, Base):
 
         reviews = relationship('Review', backref='place',
                                cascade='all, delete')
-        amenities = relationship('Amenity',
-                                 secondary=place_amenity, viewonly=False)
+        amenities = relationship('Amenity', secondary=place_amenity,
+                                 viewonly=False, backref='place_amenities')
     else:
         city_id = ""
         user_id = ""
@@ -56,7 +56,6 @@ class Place(BaseModel, Base):
         print("WIIIII")
         super().__init__(*args, **kwargs)
 
-    
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def reviews(self):

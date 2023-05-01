@@ -7,9 +7,9 @@ import uuid
 from models import storage
 from models.state import State
 
-
 def add_states(number=1):
-    conn = MySQLdb.connect(host="localhost", port=3306, user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3], charset="utf8")
+    print('WIIIIIIIII')
+    conn = MySQLdb.connect(host="localhost", port=3306, user='root', passwd='root', db='hbnb_dev_db', charset="utf8")
     cur = conn.cursor()
 
     for i in range(number):
@@ -36,6 +36,7 @@ def wrapper_all_type(m_class):
 
 print(len(wrapper_all_type(State)))
 
+print(storage)
 # Initial number of states
 add_states(3)
 
