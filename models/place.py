@@ -51,6 +51,13 @@ class Place(BaseModel, Base):
         longitude = 0.0
         amenity_ids = []
 
+    def __init__(self, *args, **kwargs):
+        """Initializes a Place instance"""
+        print("WIIIII")
+        super().__init__(*args, **kwargs)
+
+    
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def reviews(self):
             """Returns a list of Review instances"""
@@ -82,7 +89,3 @@ class Place(BaseModel, Base):
             if type(obj).__name__ == 'Amenity':
                 self.amenity_ids.append(obj.id)
                 print(self.amenity_ids)
-
-    def __init__(self, *args, **kwargs):
-        """Initializes a Place instance"""
-        super().__init__(*args, **kwargs)

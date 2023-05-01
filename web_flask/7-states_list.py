@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-"""
-Starts a flask web application on 0.0.0.0:5000
-and lists all states
-"""
+"""Starts a flask web application on 0.0.0.0:5000 and lists all states"""
 
 from flask import Flask, render_template
 from models import storage

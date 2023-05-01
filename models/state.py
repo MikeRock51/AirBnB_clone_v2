@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""The state model"""
+"""Defines a state model"""
 
 
 from models.base_model import BaseModel, Base
