@@ -22,6 +22,7 @@ def fetchCities():
 
     return render_template('8-cities_by_states.html', stateCities=stateCities)
 
+
 @app.teardown_appcontext
 def tearDown(self):
     """Removes the current SQLAlchemy Session"""
