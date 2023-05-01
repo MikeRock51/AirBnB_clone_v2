@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Starts a Flask app on 0.0.0.0:5000"""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 from models import storage
 from models.state import State
 
@@ -16,25 +16,27 @@ def fetchStates():
 
     return render_template('9-states.html', states=states)
 
-@app.route('/states/<int:id>', strict_slashes=False)
+
+@app.route('/states/<id>', strict_slashes=False)
 def fetchStateInstance(id):
     """Returns a page with requested state and it's cities"""
     states = storage.all(State)
-    state = ''
+    select = None
 
     for state in states.values():
         if state.id == id:
-            state = state
+            select = state
             break
+    if not select:
+        abort(404)
+    return render_template('9-states.html', state=select)
 
-    return render_template('9-states.html', state=state)
 
-
-@app.teardown_app_context
+@app.teardown_appcontext
 def tearDown(self):
     """Removes the current SQLAlchemy session"""
     storage.close()
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0' port=50000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -4,18 +4,21 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-        <H1>States</H1>
-        <UL>
-		{% if states %}
-		{% for state, cities in stateCities.items() %}
-		<LI>{{state.id}}: <B>{{state.name}}</B></LI>
-			<UL>
-				{% for city in cities: %}
-				<LI>{{city.id}}: <B>{{city.name}}</B></LI>
-				{% endfor %}
-			</UL>
-		{% endfor %}
+		{% if state %}
+		<H1>State: {{state.name}}</B></H1>
+		<H3>Cities:</H3>
+		<UL>
+			{% for city in state.cities %}
+			<LI>{{city.id}}: <B>{{city.name}}</B></LI>
+			{% endfor %}
+		</UL>
 		{% else %}
-	</UL>
+		<H1>States</H1>
+		<UL>
+			{% for state in states.values() %}
+			<LI>{{state.id}}: <B>{{state.name}}</B></LI>
+			{% endfor %}
+		</UL>
+		{% endif %}
     </BODY>
 </HTML>
