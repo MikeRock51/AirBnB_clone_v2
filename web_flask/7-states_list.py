@@ -11,17 +11,17 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.teardown_appcontext
-def tearDown(self):
-    """Removes the current SQLAlchemy session"""
-    storage.close()
-
-
 @app.route('/states_list', strict_slashes=False)
 def fetchState():
     """Fetches all states instances from storage"""
     allStates = storage.all(State)
     return render_template('7-states_list.html', states=allStates)
+
+
+@app.teardown_appcontext
+def tearDown(self):
+    """Removes the current SQLAlchemy session"""
+    storage.close()
 
 
 if __name__ == '__main__':
