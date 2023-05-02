@@ -4,6 +4,7 @@
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+from models.amenity import Amenity
 
 app = Flask(__name__)
 
@@ -11,13 +12,14 @@ app = Flask(__name__)
 @app.route('/hbnb_filters', strict_slashes=False)
 def hbnbFilter():
     """Loads all cities of a state"""
-    states = storage.all(States)
+    states = storage.all(State)
+    amenities = storage.all(Amenity)
     stateCities = {}
 
     for state in states.values():
-        stateCities[state] = state.cities
+        stateCities[state.name] = state.cities
 
-    return render_template('10-hbnb_filters.html', stateCities=stateCities)
+    return render_template('10-hbnb_filters.html', stateCities=stateCities, amenities=amenities)
 
 
 @app.teardown_appcontext
