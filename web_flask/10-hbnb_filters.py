@@ -19,7 +19,8 @@ def hbnbFilter():
     for state in states.values():
         stateCities[state.name] = state.cities
 
-    return render_template('10-hbnb_filters.html', stateCities=stateCities, amenities=amenities)
+    return render_template('10-hbnb_filters.html', stateCities=stateCities,
+                           amenities=amenities)
 
 
 @app.teardown_appcontext
